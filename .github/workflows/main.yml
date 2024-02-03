@@ -20,7 +20,7 @@ jobs:
 
       - name: Clone Bitbucket repository
         run: |
-          git clone --branch main https://manthangodhasara@bitbucket.org/manthan-workspace1/selenium_grid_testing.git temp_clone
+          git clone --branch master https://manthangodhasara@bitbucket.org/manthan-workspace1/selenium_grid_testing.git temp_clone
         env:
           BITBUCKET_AUTH: ${{ secrets.BITBUCKET_AUTH }}
 
@@ -33,7 +33,7 @@ jobs:
         run: |
           git add .
           git commit -m "Automated commit from GitHub Actions"
-          git push origin main
+          git push origin master
         env:
           BITBUCKET_AUTH: ${{ secrets.BITBUCKET_AUTH }}
 
