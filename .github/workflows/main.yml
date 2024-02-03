@@ -23,7 +23,10 @@ jobs:
           git clone --branch master https://manthangodhasara@bitbucket.org/manthan-workspace1/selenium_grid_testing.git temp_clone
         env:
           BITBUCKET_AUTH: ${{ secrets.BITBUCKET_AUTH }}
-
+          
+      - name: Create temp_clone directory
+        run: mkdir temp_clone
+        
       - name: Copy files to Bitbucket repository
         run: |
           cp -r * temp_clone
