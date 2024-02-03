@@ -1,0 +1,28 @@
+name: Clone and Push to Bitbucket
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on pushes to the main branch
+
+jobs:
+  clone_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Clone repository
+      run: git clone https://github.com/manthanjgodhasara/Selenium_Grid_Testing.git cloned-repo
+
+    - name: Set up Git
+      run: |
+        cd cloned-repo
+        git config user.email "manthanjgodhasara160901@gmail.com"
+        git config user.name "manthanjgodhasara"
+
+    - name: Push to Bitbucket
+      run: |
+        git remote add bitbucket https://manthangodhasara@bitbucket.org/manthan-workspace1/selenium_grid_testing.git
+        git push bitbucket HEAD:master
