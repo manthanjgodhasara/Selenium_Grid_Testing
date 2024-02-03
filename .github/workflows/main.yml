@@ -21,7 +21,7 @@ jobs:
         cd cloned-repo
         git config user.email "manthanjgodhasara160901@gmail.com"
         git config user.name "manthangodhasara"
-        git config user.password "Manthan#16"
+        git config user.Password "Manthan#16"
 
     - name: Push to Bitbucket
       run: |
