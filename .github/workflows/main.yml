@@ -3,27 +3,42 @@ name: Clone and Push to Bitbucket
 on:
   push:
     branches:
-      - main  # Trigger the workflow on pushes to the main branch
+      - main
 
 jobs:
   clone_and_push:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Clone repository
-      run: git clone https://github.com/manthanjgodhasara/Selenium_Grid_Testing.git cloned-repo
+      - name: Set up Git
+        run: |
+          git config --global user.email "manthanjgodhasara160901@gmail.com"
+          git config --global user.name "manthanjgodhasara"
 
-    - name: Set up Git
-      run: |
-        cd cloned-repo
-        git config user.email "manthanjgodhasara160901@gmail.com"
-        git config user.name "manthangodhasara"
-        git config user.Password "Manthan#16"
+      - name: Clone Bitbucket repository
+        run: |
+          git clone --branch main https://manthangodhasara@bitbucket.org/manthan-workspace1/selenium_grid_testing.git temp_clone
+        env:
+          BITBUCKET_AUTH: ${{ secrets.BITBUCKET_AUTH }}
 
-    - name: Push to Bitbucket
-      run: |
-        git remote add bitbucket https://manthangodhasara@bitbucket.org/manthan-workspace1/selenium_grid_testing.git
-        git push bitbucket HEAD:master
+      - name: Copy files to Bitbucket repository
+        run: |
+          cp -r * temp_clone/
+        working-directory: temp_clone
+
+      - name: Commit and push changes to Bitbucket
+        run: |
+          git add .
+          git commit -m "Automated commit from GitHub Actions"
+          git push origin main
+        env:
+          BITBUCKET_AUTH: ${{ secrets.BITBUCKET_AUTH }}
+
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up
+        run: rm -rf temp_clone
